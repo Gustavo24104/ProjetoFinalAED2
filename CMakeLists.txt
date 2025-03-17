@@ -7,4 +7,6 @@ add_executable(ProjetoFinalAED2 main.c
         libs/DinamycArray.c
         headers/DinamycArray.h
         libs/Leitura.c
-        headers/Leitura.h)
+        headers/Leitura.h
+        libs/Busca.c
+        headers/Busca.h)

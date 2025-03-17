@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "headers/DinamycArray.h"
 #include "headers/Leitura.h"
+#include "headers/Busca.h"
 
 /*
  * Ideia geral: cada entrada eh representado por uma struct, após a leitura do arquivo (feita por uma função) um vetor
@@ -27,6 +28,6 @@ int main() {
     LeArquivo("subset.csv", &de);
     //TODO: Função de ordenação
     ImprimeEntradas(&de);
-
+    ImprimeInfos(&de.array[0], "subset.csv");
     return 0;
 }

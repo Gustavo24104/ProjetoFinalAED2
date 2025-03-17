@@ -1,0 +1,1 @@
+compêndio de citações

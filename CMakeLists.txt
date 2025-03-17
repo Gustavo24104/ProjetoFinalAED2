@@ -4,5 +4,7 @@ project(ProjetoFinalAED2 C)
 set(CMAKE_C_STANDARD 11)
 
 add_executable(ProjetoFinalAED2 main.c
-        libs/Entrada.c
-        headers/Entrada.h)
+        libs/DinamycArray.c
+        headers/DinamycArray.h
+        libs/Leitura.c
+        headers/Leitura.h)

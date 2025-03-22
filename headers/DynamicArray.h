@@ -1,5 +1,5 @@
-#ifndef PROJETOFINALAED2_DINAMYCARRAY_H
-#define PROJETOFINALAED2_DINAMYCARRAY_H
+#ifndef PROJETOFINALAED2_DYNAMICARRAY_H
+#define PROJETOFINALAED2_DYNAMICARRAY_H
 
 /* Como a gente nãos sabe a qitdade de offsets de primeira mao, achei que talvez seria interessante fazer um vetor
  * dinamico para armazenar a lista de offsets de cada entrada, assim não precisa ficar gastando memória desnecessária.

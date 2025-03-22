@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "headers/DinamycArray.h"
+#include "headers/DynamicArray.h"
 #include "headers/Leitura.h"
 #include "headers/Busca.h"
 
@@ -27,7 +27,8 @@ int main() {
     InicializaDAEntrada(&de);
     LeArquivo("subset.csv", &de);
     //TODO: Função de ordenação
-    ImprimeEntradas(&de);
-    ImprimeInfos(&de.array[0], "subset.csv");
+    //ImprimeEntradas(&de);
+    ImprimeInfos(&de.array[6], "subset.csv");
+    LiberaDAEntrada(&de);
     return 0;
 }

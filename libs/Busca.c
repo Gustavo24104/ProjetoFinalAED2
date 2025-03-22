@@ -9,7 +9,8 @@
 // Utiliza os offsets na struct para determinar as citações (busca todas as posições, lê a lista e imprime cada parte
 // separadamente)
 void ImprimeInfos(entrada *e, char *nomeArq) {
-    FILE *arq = fopen(nomeArq, "r");
+    FILE *arq = fopen(nomeArq, "rb"); /* abrindo em modo binário pra evitar problemas entre os separadores
+    de linha de windows e UNIX (\CRLF vs \LF) */
     if(e == NULL) {
 //        printf("Palavra nao encontrada, voce digitou corretamente?\n");
         return;
@@ -19,9 +20,9 @@ void ImprimeInfos(entrada *e, char *nomeArq) {
     printf("Frequencia: %d\n\n", e->frequencia);
 
     for(int i = 0; i < e->offsets.qtd; ++i) {
-        fseek(arq, e->offsets.array[i], 0);
-        char buff[200], *cit, *filme, *ano;
-        fgets(buff, 200, arq);
+        fseek(arq, (long) e->offsets.array[i], 0);
+        char buff[500], *cit, *filme, *ano;
+        fgets(buff, 500, arq);
         // Separação de cada parte da linha
         cit = strtok(buff, "\"");
         filme = strtok(NULL, "\",");

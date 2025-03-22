@@ -1,12 +1,10 @@
 #include "../headers/Leitura.h"
-#include "../headers/DynamicArray.h"
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
 //Separa todas as palavras em uma frase qualquer, retorna a qtidade de palavras separadas
-int SeparaPalavras(char palavras[30][50], char *frase) {
+int SeparaPalavras(char palavras[100][100], const char *frase) {
     int i = 0;
     int j = 0;
     int qtdPalavras = 0;
@@ -27,7 +25,7 @@ int SeparaPalavras(char palavras[30][50], char *frase) {
         if((frase[i] >= 65 && frase[i] <= 90) || (frase[i] >= 97 && frase[i] <= 122)) { /* verifica se eh letra (remove
             virgulas */
             //transforma em minusculo
-            if(frase[i] >= 65 && frase[i] <= 90) acc[j] = (frase[i] + 32);
+            if(frase[i] >= 65 && frase[i] <= 90) acc[j] = (char) (frase[i] + 32);
             else acc[j] = frase[i];
             j++;
         }
@@ -45,7 +43,7 @@ int JaExiste(dinArrayEntrada *de, char *palavra) {
 }
 
 // Insere as palavras no vetor dinamico de entradas
-void InsereVetor(char palavra[30][50], dinArrayEntrada *de, int qtd, int offs) {
+void InsereVetor(char palavra[100][100], dinArrayEntrada *de, int qtd, int offs) {
     for (int i = 0; i < qtd; ++i) {
         int existe = JaExiste(de, palavra[i]);
         if (existe >= 0) { // palavra existente, 'existe' indica seu indice
@@ -67,20 +65,21 @@ void InsereVetor(char palavra[30][50], dinArrayEntrada *de, int qtd, int offs) {
 
 //Função para ler o arquivo e adicionar nas estruturas (vetor e arvores)
 int LeArquivo(char *nomeArq, dinArrayEntrada *de) {
-    FILE* arq = fopen(nomeArq, "r");
+    FILE* arq = fopen(nomeArq, "rb"); /* abrindo em modo binário pra evitar problemas entre
+     os separadores de linha de windows e UNIX (\CRLF vs \LF) */
     if(arq == NULL) {
         printf("Arquivo nao encontrado!\n");
         return 1;
     }
-    char buff[500];
 
+    char buff[700];
 
     double tempoVetor = 0; //tempo de inserção no vetor
     //TODO: Explicar
 
     long offs = ftell(arq); //o primeiro ftell tem que ser antes da primeira leitura
-    while(fgets(buff, 500, arq)) {
-        char *frase, palavra[30][50];
+    while(fgets(buff, 700, arq)) {
+        char *frase, palavra[100][100];
         frase = strtok(buff, "\"");
         int qtd = SeparaPalavras(palavra, frase);
         time_t start = clock();

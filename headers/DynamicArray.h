@@ -8,7 +8,7 @@
  */
 
 typedef struct {
-    int *array;
+    unsigned int *array;
     int qtd;
     int capacidade;
 } dinArrayInt;

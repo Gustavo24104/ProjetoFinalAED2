@@ -22,12 +22,11 @@
  */
 
 int main() {
-
     dinArrayEntrada de;
     InicializaDAEntrada(&de);
     LeArquivo("subset.csv", &de);
     //TODO: Função de ordenação
-    //ImprimeEntradas(&de);
+    ImprimeEntradas(&de);
     ImprimeInfos(&de.array[6], "subset.csv");
     LiberaDAEntrada(&de);
     return 0;

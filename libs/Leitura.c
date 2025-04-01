@@ -11,16 +11,16 @@ int SeparaPalavras(char palavras[100][100], const char *frase) {
     char acc[50];
 
     while(frase[i] != '\0'){
-        if(frase[i] == ' ' || frase[i] == '.') { //ponto ou espaço -> fim de palavra
+        if(frase[i] == ' ' || frase[i] == '.' || frase[i] == '!' || frase[i] == '?') { //fim de palavra
             acc[j] = '\0';
             //printf("%s\n", acc);
-            if(j >= 3) strcpy(palavras[qtdPalavras++], acc); //adiciona a palavra no vetor
+            if(j >= 3) strcpy(palavras[qtdPalavras++], acc); /* adiciona a palavra no vetor se tiver mais de 3
+            caracteres */
             j = 0;
             memset(acc, 0, 50);
             i++;
             continue;
         }
-
 
         if((frase[i] >= 65 && frase[i] <= 90) || (frase[i] >= 97 && frase[i] <= 122)) { /* verifica se eh letra (remove
             virgulas */

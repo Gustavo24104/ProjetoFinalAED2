@@ -40,9 +40,9 @@ int main() {
     InicializaDAEntrada(&de);
     LeArquivo("subset.csv", &de, &arvNB);
     //TODO: Função de ordenação
-    //ImprimeEntradas(&de);
+//    ImprimeEntradas(&de);
 
-    ImprimeInfos(BuscaABB(arvNB, "night"), "subset.csv");
+    ImprimeInfos(BuscaABB(arvNB, "dog"), "subset.csv");
 
 
     LiberaDAEntrada(&de);

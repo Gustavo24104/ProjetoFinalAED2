@@ -18,9 +18,11 @@ void ImprimeInfos(entrada *e, char *nomeArq) {
 
     printf("Palavra encontrada: %s\n", e->palavra);
     printf("Frequencia: %d\n\n", e->frequencia);
+    int ant = -1; //Não imprimir repetidos
 
     for(int i = 0; i < e->offsets.qtd; ++i) {
         fseek(arq, (long) e->offsets.array[i], 0);
+        if(ant == e->offsets.array[i]) continue;
         char buff[500], *cit, *filme, *ano;
         fgets(buff, 500, arq);
         // Separação de cada parte da linha
@@ -31,7 +33,29 @@ void ImprimeInfos(entrada *e, char *nomeArq) {
         printf("Filme: %s\n", filme);
         printf("Ano: %s\n", ano);
         printf("\n");
+        ant = (int) e->offsets.array[i];
     }
-
     fclose(arq);
+}
+
+
+//Busca a palavra passada e retorna uma refêrencia à sua entrada (assim passam-se todos os dados)
+entrada* BuscaABB(arvore *raiz, char *palavra) {
+    if(raiz == NULL) return NULL;
+    if(strcmp(palavra, raiz->ent.palavra) == 0) return &raiz->ent;
+    if(strcmp(palavra, raiz->ent.palavra) < 0) return BuscaABB(raiz->esq, palavra);
+    if(strcmp(palavra, raiz->ent.palavra) > 0) return BuscaABB(raiz->dir, palavra);
+}
+
+void Infix(arvore *r, char *arq) {
+    if(r == NULL) return;
+    Infix(r->esq, arq);
+    printf("Palavra: %s\n", r->ent.palavra);
+    printf("Offsets: [");
+    for(int j = 0; j < r->ent.offsets.qtd; ++j) {
+        if(j != r->ent.offsets.qtd-1) printf("%03d, ", r->ent.offsets.array[j]);
+        else printf("%03d]\n", r->ent.offsets.array[j]);
+    }
+    printf("Frequencia: %d\n\n", r->ent.frequencia);
+    Infix(r->dir, arq);
 }

@@ -9,4 +9,6 @@ add_executable(ProjetoFinalAED2 main.c
         libs/Leitura.c
         headers/Leitura.h
         libs/Busca.c
-        headers/Busca.h)
+        headers/Busca.h
+        libs/Arvores.c
+        headers/Arvores.h)

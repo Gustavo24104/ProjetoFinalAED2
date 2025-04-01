@@ -19,7 +19,7 @@ void InicializaDAInt(dinArrayInt *arr){
 
 
 
-// Função de inserção na array dinaminca de offsets
+// Insere no vector de inteiros, verifica se nao estourou a capacidade e coloca um novo
 int InsereDAInt(int e, dinArrayInt *arr) {
     if(arr == NULL) {
         return -1;
@@ -56,6 +56,8 @@ void InicializaDAEntrada(dinArrayEntrada *dae) {
     dae->array = malloc(sizeof(entrada));
 }
 
+
+//Inserir nova entrada, verifica se nao estourou a capacidade e insere
 int InsereDAEntrada(entrada e, dinArrayEntrada *arr) {
     if(arr == NULL) {
         return -1;

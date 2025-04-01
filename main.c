@@ -15,19 +15,36 @@
  * virgulas, etc
  *
  * O problema 'B' também não é complicado: O usuário digita a palavra de busca, essa palavra eh encontrada dentro da
- * memória do programa, e, usando sua lista de offsets conseguimos imprimir o que é pedido corretamente
+ * memória do programa (por meio de busca binária no vetor e a arvore de busca nao balanceada),
+ * e, usando sua lista de offsets conseguimos imprimir o que é pedido corretamente
  *
- * O problema 'C' ainda não sabemos resolver
+ * O problema 'C' basta inserir os elementos na arvore AVL (fazer isso depois da leitura do arquivo pois é necessário
+ * saber a frequência anteriormente) e fazer a busca binária de modo normal. O mais chato dessa questão será o balancea-
+ * mento da árvore
  *
+ *
+ * Outro detalhe é que durante a execução do programa o usuário pode mudar o arquivo escolhido, para isso temos que
+ * liberar as estruturas e recarregá-las
  */
+
+//int ContaNos(arvore *a, int count) {
+//    if(a == NULL) return count;
+//    ContaNos(a->dir, ++count);
+//    ContaNos(a->esq, ++count);
+//}
+
 
 int main() {
     dinArrayEntrada de;
+    arvore *arvNB = NULL;
     InicializaDAEntrada(&de);
-    LeArquivo("subset.csv", &de);
+    LeArquivo("subset.csv", &de, &arvNB);
     //TODO: Função de ordenação
-    ImprimeEntradas(&de);
-    ImprimeInfos(&de.array[6], "subset.csv");
+    //ImprimeEntradas(&de);
+
+    ImprimeInfos(BuscaABB(arvNB, "night"), "subset.csv");
+
+
     LiberaDAEntrada(&de);
     return 0;
 }

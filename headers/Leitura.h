@@ -2,7 +2,9 @@
 #define PROJETOFINALAED2_LEITURA_H
 
 #include "../headers/DynamicArray.h"
+#include "../headers/Arvores.h"
 
-int LeArquivo(char *nomeArq, dinArrayEntrada *vet);
+int LeArquivo(char *nomeArq, dinArrayEntrada *de, arvore **arv);
+
 
 #endif

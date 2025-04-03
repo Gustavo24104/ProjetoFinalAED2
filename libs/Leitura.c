@@ -108,6 +108,8 @@ int LeArquivo(char *nomeArq, dinArrayEntrada *de, arvore **arv) {
         end = clock();
         tempoArvoreNB += ((double) (end - start)/CLOCKS_PER_SEC);
 
+
+
         offs = ftell(arq);
     }
 

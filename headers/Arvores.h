@@ -9,6 +9,7 @@ typedef struct arv {
 
 int InsereArvoreNB(arvore **raiz, entrada *e, int offs);
 void LiberaArvore(arvore **raiz);
+int InsereAVL(arvore **raiz, entrada *e, int offs);
 
 
 

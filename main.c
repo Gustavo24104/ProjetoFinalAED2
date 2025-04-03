@@ -37,12 +37,14 @@
 int main() {
     dinArrayEntrada de;
     arvore *arvNB = NULL;
+    arvore *arvAVL = NULL;
     InicializaDAEntrada(&de);
-    LeArquivo("subset.csv", &de, &arvNB);
+    LeArquivo("small.csv", &de, &arvNB);
     //TODO: Função de ordenação
 //    ImprimeEntradas(&de);
 
-    ImprimeInfos(BuscaABB(arvNB, "dog"), "subset.csv");
+
+    //ImprimeInfos(BuscaABB(arvNB, "dog"), "subset.csv");
 
 
     LiberaDAEntrada(&de);

@@ -8,7 +8,7 @@ int SeparaPalavras(char palavras[100][100], const char *frase) {
     int i = 0;
     int j = 0;
     int qtdPalavras = 0;
-    char acc[50];
+    char acc[50]; // acumulador para ser cada palavra
 
     while(frase[i] != '\0'){
         if(frase[i] == ' ' || frase[i] == '.' || frase[i] == '!' || frase[i] == '?') { //fim de palavra
@@ -17,13 +17,13 @@ int SeparaPalavras(char palavras[100][100], const char *frase) {
             if(j >= 3) strcpy(palavras[qtdPalavras++], acc); /* adiciona a palavra no vetor se tiver mais de 3
             caracteres */
             j = 0;
-            memset(acc, 0, 50);
+            memset(acc, 0, 50); // reseta o acumulador setando todos seus bits pra 0
             i++;
             continue;
         }
 
         if((frase[i] >= 65 && frase[i] <= 90) || (frase[i] >= 97 && frase[i] <= 122)) { /* verifica se eh letra (remove
-            virgulas */
+            virgulas e outro chars especiais */
             //transforma em minusculo
             if(frase[i] >= 65 && frase[i] <= 90) acc[j] = (char) (frase[i] + 32);
             else acc[j] = frase[i];
@@ -60,7 +60,7 @@ void InsereVetor(char palavra[100][100], dinArrayEntrada *de, int qtd, int offs)
         new.frequencia = 1;
         InicializaDAInt(&new.offsets);
         strcpy(new.palavra, palavra[i]);
-        InsereDAEntrada(new, de);
+        InsereDAEntrada(&new, de);
         InsereDAInt(offs, &de->array[de->qtd - 1].offsets);
     }
 }
@@ -78,9 +78,8 @@ void InsereArvore(char palavra[100][100], arvore **arv, int qtd, int offs) {
 }
 
 
-
 //Função para ler o arquivo e adicionar nas estruturas (vetor e arvores)
-int LeArquivo(char *nomeArq, dinArrayEntrada *de, arvore **arv) {
+int LeArquivo(char *nomeArq, dinArrayEntrada *de, arvore **arv, avl **arvAvl) {
     FILE* arq = fopen(nomeArq, "rb"); /* abrindo em modo binário pra evitar problemas entre
      os separadores de linha de windows e UNIX (\CRLF vs \LF) */
     if(arq == NULL) {
@@ -89,30 +88,37 @@ int LeArquivo(char *nomeArq, dinArrayEntrada *de, arvore **arv) {
     }
     char buff[700];
     time_t start = 0, end = 0;
-    double tempoVetor = 0; //tempo de inserção no vetor
+    double tempoVetor = 0;
     double tempoArvoreNB = 0;
+    double tempoArvoreAVL = 0;
     //Inserindo no vetor
     long offs = ftell(arq); //o primeiro ftell tem que ser antes da primeira leitura
     while(fgets(buff, 700, arq)) {
         char *frase, palavra[100][100];
-        frase = strtok(buff, "\"");
-        int qtd = SeparaPalavras(palavra, frase);
+        frase = strtok(buff, "\""); // Foi lida a linha inteira, então separa a frase inicial
+        int qtd = SeparaPalavras(palavra, frase); // E depois separa palavra por palavra
 
         start = clock();
         InsereVetor(palavra, de, qtd, offs);
         end = clock();
-        tempoVetor += ((double)(end - start)/CLOCKS_PER_SEC); // soma o tempo de colocar no vetor
+        tempoVetor += ((double)(end - start)/CLOCKS_PER_SEC);
 
         start = clock();
         InsereArvore(palavra, arv, qtd, offs);
         end = clock();
         tempoArvoreNB += ((double) (end - start)/CLOCKS_PER_SEC);
 
-
-
         offs = ftell(arq);
     }
 
+    // Insere na arvore AVL, como a AVL é de frequência, só conseguimos inserir nela após lidos todas as palavras
+    // e sabermos suas frequências
+    start = clock();
+    for(int i = 0; i < de->qtd; ++i) {
+        InsereAVL(arvAvl, &de->array[i]);
+    }
+    end = clock();
+    tempoArvoreAVL = ((double) (end - start)/CLOCKS_PER_SEC);
 
     //TODO:
 //      time_t start = clock();
@@ -121,6 +127,7 @@ int LeArquivo(char *nomeArq, dinArrayEntrada *de, arvore **arv) {
 //      tempoVetor += ((double)(end - start)/CLOCKS_PER_SEC);
     printf("Tempo para insercao e ordenacao no vetor: %.4lf segs\n", tempoVetor);
     printf("Tempo para insercao na arvore binaria de busca nao balanceada: %.4lf segs\n", tempoArvoreNB);
+    printf("Tempo para insercao na arvore AVL: %.4lf segs\n", tempoArvoreAVL);
     fclose(arq);
 
 

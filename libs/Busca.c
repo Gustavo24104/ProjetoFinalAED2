@@ -47,15 +47,21 @@ entrada* BuscaABB(arvore *raiz, char *palavra) {
     if(strcmp(palavra, raiz->ent.palavra) > 0) return BuscaABB(raiz->dir, palavra);
 }
 
-void Infix(arvore *r, char *arq) {
-    if(r == NULL) return;
-    Infix(r->esq, arq);
-    printf("Palavra: %s\n", r->ent.palavra);
-    printf("Offsets: [");
-    for(int j = 0; j < r->ent.offsets.qtd; ++j) {
-        if(j != r->ent.offsets.qtd-1) printf("%03d, ", r->ent.offsets.array[j]);
-        else printf("%03d]\n", r->ent.offsets.array[j]);
-    }
-    printf("Frequencia: %d\n\n", r->ent.frequencia);
-    Infix(r->dir, arq);
+//Busca a palavra em frequência na arvore AVL, e retorna um ponteiro para o vetor de palavras que tem aquela frequência
+dinArrayEntrada* BuscaAVL(avl *raiz, unsigned int freq) {
+    if(raiz == NULL) return NULL;
+    if(freq == raiz->entArr.array[0].frequencia) return &raiz->entArr;
+    if(freq > raiz->entArr.array[0].frequencia) return BuscaAVL(raiz->dir, freq);
+    if(freq < raiz->entArr.array[0].frequencia) return BuscaAVL(raiz->esq, freq);
 }
+
+//Imprime as palavras no vetor de entradas, usamos essa função junto com a buscaAVL para mostrar todas as palavras com
+// uma frequência x
+void ImprimePalavras(dinArrayEntrada *de) {
+    for(int i = 0; i < de->qtd; ++i) {
+        printf("Palavra: %s\n", de->array[i].palavra);
+    }
+}
+
+
+

@@ -28,7 +28,7 @@ typedef struct {
 int InsereDAInt(int e, dinArrayInt *arr);
 void InicializaDAInt(dinArrayInt *arr);
 void LiberaDAInt(dinArrayInt *da);
-int InsereDAEntrada(entrada e, dinArrayEntrada *arr);
+int InsereDAEntrada(entrada *e, dinArrayEntrada *arr);
 void InicializaDAEntrada(dinArrayEntrada *dae);
 void LiberaDAEntrada(dinArrayEntrada *da);
 void ImprimeEntradas(dinArrayEntrada *de);

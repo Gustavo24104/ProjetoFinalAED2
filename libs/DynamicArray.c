@@ -1,6 +1,7 @@
 #include "../headers/DynamicArray.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 
 //------------------------------------------ Funções de array dinânimicas ---------------------------------------------
@@ -28,7 +29,7 @@ int InsereDAInt(int e, dinArrayInt *arr) {
     if(arr->qtd+1 >= arr->capacidade) {
         arr->capacidade *= 2; /* por motivos de performance (nao ficar realocando memória toda hora) é melhor dobrar
         a qtidade de memoria reservada pro vetor */
-        int *newPtr;
+        unsigned int *newPtr;
         newPtr = realloc(arr->array, arr->capacidade * sizeof(int));
         if(newPtr == NULL) {
             free(newPtr);
@@ -42,9 +43,10 @@ int InsereDAInt(int e, dinArrayInt *arr) {
 }
 
 void LiberaDAInt(dinArrayInt *da) {
-    free(da->array);
-    da->capacidade = 0;
-    da->qtd = 0;
+    free((da)->array);
+    (da)->capacidade = 0;
+    (da)->qtd = 0;
+    //*da = NULL;
 }
 
 
@@ -58,7 +60,8 @@ void InicializaDAEntrada(dinArrayEntrada *dae) {
 
 
 //Inserir nova entrada, verifica se nao estourou a capacidade e insere
-int InsereDAEntrada(entrada e, dinArrayEntrada *arr) {
+//Função assume que ja inicializou o vetor dinamico de offsets
+int InsereDAEntrada(entrada *e, dinArrayEntrada *arr) {
     if(arr == NULL) {
         return -1;
     }
@@ -74,9 +77,14 @@ int InsereDAEntrada(entrada e, dinArrayEntrada *arr) {
         arr->array = newPtr;
     }
 
-    InicializaDAInt(&arr->array[arr->qtd].offsets); /* Como cada entrada tem um vetor dinamica de offsets, é preciso
-    inicializar ele com cada novo elemento */
-    arr->array[arr->qtd++] = e;
+
+    arr->array[arr->qtd++] = *e;
+    arr->array[arr->qtd - 1].offsets.array = malloc(e->offsets.capacidade * sizeof(unsigned int)); /* Aloca nova
+    memória pra garantir que o array de offsets de 'e' e 'arr' apontem para espaços diferentes na memória, evitando
+    conflitos */
+    memcpy(arr->array[arr->qtd - 1].offsets.array, e->offsets.array,
+           e->offsets.capacidade * sizeof(unsigned int)); /* copiar array pra
+    pra garantir que ambas estejam separadas */
     return 0;
 }
 
@@ -86,6 +94,7 @@ void LiberaDAEntrada(dinArrayEntrada *da) {
         LiberaDAInt(&da->array[i].offsets);
     }
     free(da->array);
+    da->array = NULL;
     da->capacidade = 0;
     da->qtd = 0;
 }
@@ -102,6 +111,9 @@ void ImprimeEntradas(dinArrayEntrada *de) {
         printf("Frequencia: %d\n\n", de->array[i].frequencia);
     }
 }
+
+
+
 
 //---------------------------------------------------------------------------------------------------------------------
 

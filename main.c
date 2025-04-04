@@ -27,26 +27,23 @@
  * liberar as estruturas e recarregá-las
  */
 
-//int ContaNos(arvore *a, int count) {
-//    if(a == NULL) return count;
-//    ContaNos(a->dir, ++count);
-//    ContaNos(a->esq, ++count);
-//}
-
 
 int main() {
     dinArrayEntrada de;
     arvore *arvNB = NULL;
-    arvore *arvAVL = NULL;
+    avl *arvAVL = NULL;
     InicializaDAEntrada(&de);
-    LeArquivo("small.csv", &de, &arvNB);
+    LeArquivo("subset.csv", &de, &arvNB, &arvAVL);
     //TODO: Função de ordenação
+//    ImprimePalavras(BuscaAVL(arvAVL, 4));
 //    ImprimeEntradas(&de);
+//    ImprimeInfos(BuscaABB(arvNB, "not"), "subset.csv");
 
 
-    //ImprimeInfos(BuscaABB(arvNB, "dog"), "subset.csv");
-
-
+    LiberaArvore(&arvNB);
+    LiberaAVL(&arvAVL);
     LiberaDAEntrada(&de);
+
+
     return 0;
 }

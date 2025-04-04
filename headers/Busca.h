@@ -5,6 +5,7 @@
 
 void ImprimeInfos(entrada *e, char *nomeArq);
 entrada* BuscaABB(arvore *raiz, char *palavra);
-void Infix(arvore *r, char *arq);
+dinArrayEntrada* BuscaAVL(avl *raiz, unsigned int freq);
+void ImprimePalavras(dinArrayEntrada *de);
 
 #endif

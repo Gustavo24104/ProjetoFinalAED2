@@ -4,7 +4,7 @@
 #include "../headers/DynamicArray.h"
 #include "../headers/Arvores.h"
 
-int LeArquivo(char *nomeArq, dinArrayEntrada *de, arvore **arv);
+int LeArquivo(char *nomeArq, dinArrayEntrada *de, arvore **arv, avl **arvAvl);
 
 
 #endif

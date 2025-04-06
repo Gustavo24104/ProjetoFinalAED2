@@ -112,6 +112,24 @@ void ImprimeEntradas(dinArrayEntrada *de) {
     }
 }
 
+void ShellSort(dinArrayEntrada* vet) {
+    int h = 1;
+    int j;
+    char key[30];
+    do h = h * 3 + 1; while (h < vet->qtd);
+    do {
+        h = h/3;
+        for (int i = h; i < vet->qtd;  i++) {
+            strcpy(key, vet->array[i].palavra);
+            j = i - h;
+            while (j >= 0 && (strcmp(vet->array[j].palavra, key) > 0)) {
+                strcpy(vet->array[j + h].palavra, vet->array[j].palavra);
+                j-=h;
+            }
+            strcpy(vet->array[j + h].palavra, key);
+        }
+    }while (h > 1);
+}
 
 
 

@@ -69,26 +69,6 @@ void InsereVetor(char palavra[100][100], dinArrayEntrada *de, int qtd, int offs)
 
 }
 
-void ShellSort(dinArrayEntrada* vet) {
-    int h = 1;
-    int j;
-    char key[30];
-    do h = h * 3 + 1; while (h < vet->qtd);
-    do {
-        h = h/3;
-        for (int i = h; i < vet->qtd;  i++) {
-            strcpy(key, vet->array[i].palavra);
-            j = i - h;
-            while (j >= 0 && (strcmp(vet->array[j].palavra, key) > 0)) {
-                strcpy(vet->array[j + h].palavra, vet->array[j].palavra);
-                j-=h;
-            }
-            strcpy(vet->array[j + h].palavra, key);
-        }
-    }while (h > 1);
-
-}
-
 //Função insere cada palavra separadamente na arvore
 void InsereArvore(char palavra[100][100], arvore **arv, int qtd, int offs) {
     for(int i = 0; i < qtd; ++i) {
@@ -144,11 +124,13 @@ int LeArquivo(char *nomeArq, dinArrayEntrada *de, arvore **arv, avl **arvAvl) {
     end = clock();
     tempoArvoreAVL = ((double) (end - start)/CLOCKS_PER_SEC);
 
-    //TODO:
-//      time_t start = clock();
-//      OrdenaVetor();
-//      time_t end = clock();
-//      tempoVetor += ((double)(end - start)/CLOCKS_PER_SEC);
+    //calcula tempo de ordenação do vetor
+    start = clock();
+    ShellSort(de);
+    end = clock();
+    tempoVetor += ((double)(end - start)/CLOCKS_PER_SEC);
+
+
     printf("Tempo para insercao e ordenacao no vetor: %.4lf segs\n", tempoVetor);
     printf("Tempo para insercao na arvore binaria de busca nao balanceada: %.4lf segs\n", tempoArvoreNB);
     printf("Tempo para insercao na arvore AVL: %.4lf segs\n", tempoArvoreAVL);

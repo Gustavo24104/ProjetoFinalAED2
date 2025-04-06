@@ -82,6 +82,7 @@ void InsereArvore(char palavra[100][100], arvore **arv, int qtd, int offs) {
 }
 
 
+
 //Função para ler o arquivo e adicionar nas estruturas (vetor e arvores)
 int LeArquivo(char *nomeArq, dinArrayEntrada *de, arvore **arv, avl **arvAvl) {
     FILE* arq = fopen(nomeArq, "rb"); /* abrindo em modo binário pra evitar problemas entre

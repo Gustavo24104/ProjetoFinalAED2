@@ -37,15 +37,6 @@ int main() {
     avl *arvAVL = NULL;
     InicializaDAEntrada(&de);
     LeArquivo("movie_quotes.csv", &de, &arvNB, &arvAVL);
-    
-
-    //ImprimeEntradas(&de);
-
-    //TODO: Função de ordenação
-//    ImprimePalavras(BuscaAVL(arvAVL, 4));
-//    ImprimeEntradas(&de);
-//    ImprimeInfos(BuscaABB(arvNB, "not"), "subset.csv");
-
 
     LiberaArvore(&arvNB);
     LiberaAVL(&arvAVL);

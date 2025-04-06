@@ -116,17 +116,19 @@ void ShellSort(dinArrayEntrada* vet) {
     int h = 1;
     int j;
     char key[30];
+    entrada aux;
     do h = h * 3 + 1; while (h < vet->qtd);
     do {
         h = h/3;
         for (int i = h; i < vet->qtd;  i++) {
             strcpy(key, vet->array[i].palavra);
+            aux = vet->array[i];
             j = i - h;
             while (j >= 0 && (strcmp(vet->array[j].palavra, key) > 0)) {
-                strcpy(vet->array[j + h].palavra, vet->array[j].palavra);
+                vet->array[j+h] = vet->array[j];
                 j-=h;
             }
-            strcpy(vet->array[j + h].palavra, key);
+            vet->array[j+h] = aux;
         }
     }while (h > 1);
 }

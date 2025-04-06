@@ -45,6 +45,9 @@ int JaExiste(dinArrayEntrada *de, char *palavra) {
 //TODO: Depois verificar se eh melhor ordenar tudo no final ou ordenar a cada inserção (com insertion sort) e buscar
 // com busca binária
 
+
+
+
 // Insere as palavras no vetor dinamico de entradas
 void InsereVetor(char palavra[100][100], dinArrayEntrada *de, int qtd, int offs) {
     for (int i = 0; i < qtd; ++i) {
@@ -63,6 +66,27 @@ void InsereVetor(char palavra[100][100], dinArrayEntrada *de, int qtd, int offs)
         InsereDAEntrada(&new, de);
         InsereDAInt(offs, &de->array[de->qtd - 1].offsets);
     }
+
+}
+
+void ShellSort(dinArrayEntrada* vet) {
+    int h = 1;
+    int j;
+    char key[30];
+    do h = h * 3 + 1; while (h < vet->qtd);
+    do {
+        h = h/3;
+        for (int i = h; i < vet->qtd;  i++) {
+            strcpy(key, vet->array[i].palavra);
+            j = i - h;
+            while (j >= 0 && (strcmp(vet->array[j].palavra, key) > 0)) {
+                strcpy(vet->array[j + h].palavra, vet->array[j].palavra);
+                j-=h;
+            }
+            strcpy(vet->array[j + h].palavra, key);
+        }
+    }while (h > 1);
+
 }
 
 //Função insere cada palavra separadamente na arvore

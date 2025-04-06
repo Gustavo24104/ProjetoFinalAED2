@@ -34,6 +34,9 @@ int main() {
     avl *arvAVL = NULL;
     InicializaDAEntrada(&de);
     LeArquivo("subset.csv", &de, &arvNB, &arvAVL);
+    ShellSort(&de);
+    ImprimeEntradas(&de);
+
     //TODO: Função de ordenação
 //    ImprimePalavras(BuscaAVL(arvAVL, 4));
 //    ImprimeEntradas(&de);

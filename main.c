@@ -50,8 +50,6 @@ void Menu(){
         if (inicio != 0) printf("\nArquivo nao encontrado!\n");
     }
 
-    PosFix(arvAVL);
-
     while (escolha != -1){
         printf("\n(1)Trocar arquivo.\n(2)Busca por palavra.\n(3)Busca por frequencia.\n(-1)Encerrar.\n");
         scanf("%d", &escolha);

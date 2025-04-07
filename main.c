@@ -2,8 +2,8 @@
 #include "headers/DynamicArray.h"
 #include "headers/Leitura.h"
 #include "headers/Busca.h"
-#include "headers/Menu.h"
 #include <time.h>
+#include <string.h>
 
 /*
  * Ideia geral: cada entrada eh representado por uma struct, após a leitura do arquivo (feita por uma função) um vetor
@@ -46,7 +46,7 @@ void Menu(){
         fgets(arq, 100, stdin);
         arq[strlen(arq) - 1] = '\0';
         inicio = LeArquivo(arq, &de, &arvNB, &arvAVL);
-        if (inicio == 1) printf("\nTente Novamente!\n");
+        if (inicio != 0) printf("\nArquivo nao encontrado!\n");
     }
 
     while (escolha != -1){
@@ -63,57 +63,64 @@ void Menu(){
                 LiberaDAEntrada(&de);
                 InicializaDAEntrada(&de);
                 inicio = 1;
-                while(inicio == 1){
-        printf("Digite o nome do arquivo desejado:\n");
-        fflush(stdin);
-        fgets(arq, 100, stdin);
-        arq[strlen(arq) - 1] = '\0';
-        inicio = LeArquivo(arq, &de, &arvNB, &arvAVL);
-        if (inicio == 1) printf("\nTente Novamente!\n");
-    }
+                while(inicio == 1) {
+                    printf("Digite o nome do arquivo desejado:\n");
+                    fflush(stdin);
+                    setbuf(stdin, NULL);
+                    fgets(arq, 100, stdin);
+                    arq[strlen(arq) - 1] = '\0';
+                    inicio = LeArquivo(arq, &de, &arvNB, &arvAVL);
+                    if (inicio != 0) printf("\nArquivo nao encontrado!\n");
+                }
                 continue;
 
             case 2:
                 printf("\nDigite a palavra desejada:\n");
                 fflush(stdin);
+                setbuf(stdin, NULL);
                 fgets(word, 100, stdin);
                 word[strlen(word) - 1] = '\0';
 
-                double tempoABB = 0;
-                double tempoBIN = 0;
+                long double tempoABB = 0;
+                long double tempoBIN = 0;
                 entrada* aux1 = NULL;
                 entrada* aux2 = NULL;
 
                 start = clock();
                 aux1 = BuscaABB(arvNB, word);
                 end = clock();
-                tempoABB = (end - start)/CLOCKS_PER_SEC;
+                tempoABB = (double) (end - start)/CLOCKS_PER_SEC;
 
                 start = clock();
                 aux2 = BuscaBIN(&de, word, 0, (de.qtd)-1);
                 end = clock();
-                tempoBIN = (end - start)/CLOCKS_PER_SEC;
+                tempoBIN = (double) (end - start)/CLOCKS_PER_SEC;
 
                 if(aux1 == NULL && aux2 == NULL) {
                     printf("palavra nao encontrada! voce digitou corretamente?");
                     continue;
                 }
 
-                printf("\nPor busca de arvore nao balanceada (tempo: %.4lf segs):\n", tempoABB);
                 ImprimeInfos(aux1, arq);
-                printf("\nPor busca binaria (tempo: %.4lf segs):\n", tempoBIN);
                 ImprimeInfos(aux2, arq);
+                printf("\nTempo de pesquisa de arvore nao balanceada: %.12Lf segs)\n", tempoABB);
+                printf("\nTempo de pesquisa busca binaria: %.12Lf segs)\n", tempoBIN);
                 continue;
 
             case 3:
-                printf("\nPalavras com frequencia x:\n");
+                printf("Digite frequencia:\n");
                 scanf("%d", &frq);
-                double tempoAVL = 0;
+                long double tempoAVL = 0;
                 start = clock();
-                ImprimePalavras(BuscaAVL(arvAVL, frq));
+                dinArrayEntrada * aux = BuscaAVL(arvAVL, frq);
                 end = clock();
-                tempoAVL = (end - start)/CLOCKS_PER_SEC;
-                printf("Custo da busca por frequencia em AVL: %.4lf segs\n", tempoAVL);
+                if(aux == NULL) {
+                    printf("Nao há palavras com frequencia %d!\n", frq);
+                    continue;
+                }
+                ImprimePalavras(aux);
+                tempoAVL = (double) (end - start)/CLOCKS_PER_SEC;
+                printf("Tempo de pesquisa por frequencia em AVL: %.12Lf segs\n", tempoAVL);
                 continue;
 
             case -1:

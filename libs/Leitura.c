@@ -11,7 +11,25 @@ int SeparaPalavras(char palavras[100][100], const char *frase) {
     char acc[50]; // acumulador para ser cada palavra
 
     while(frase[i] != '\0'){
-        if(frase[i] == ' ' || frase[i] == '.' || frase[i] == '!' || frase[i] == '?') { //fim de palavra
+//        if(frase[i] == ' ' || frase[i] == '.' || frase[i] == '!' || frase[i] == '?' || frase[i] == '\"') { //fim de palavra
+//            acc[j] = '\0';
+//            //printf("%s\n", acc);
+//            if(j >= 3) strcpy(palavras[qtdPalavras++], acc); /* adiciona a palavra no vetor se tiver mais de 3
+//            caracteres */
+//            j = 0;
+//            memset(acc, 0, 50); // reseta o acumulador setando todos seus bits pra 0
+//            i++;
+//            continue;
+//        }
+
+        if((frase[i] >= 65 && frase[i] <= 90) || (frase[i] >= 97 && frase[i] <= 122)) { /* verifica se eh letra (remove
+            virgulas e outro chars especiais */
+            //transforma em minusculo
+            if(frase[i] >= 65 && frase[i] <= 90) acc[j] = (char) (frase[i] + 32);
+            else acc[j] = frase[i];
+            j++;
+        }
+        if(frase[i] == ' ' || frase[i] == '.' || frase[i] == '!' || frase[i] == '?' || frase[i+1] == '\0') { //fim de palavra
             acc[j] = '\0';
             //printf("%s\n", acc);
             if(j >= 3) strcpy(palavras[qtdPalavras++], acc); /* adiciona a palavra no vetor se tiver mais de 3
@@ -20,14 +38,6 @@ int SeparaPalavras(char palavras[100][100], const char *frase) {
             memset(acc, 0, 50); // reseta o acumulador setando todos seus bits pra 0
             i++;
             continue;
-        }
-
-        if((frase[i] >= 65 && frase[i] <= 90) || (frase[i] >= 97 && frase[i] <= 122)) { /* verifica se eh letra (remove
-            virgulas e outro chars especiais */
-            //transforma em minusculo
-            if(frase[i] >= 65 && frase[i] <= 90) acc[j] = (char) (frase[i] + 32);
-            else acc[j] = frase[i];
-            j++;
         }
         i++;
     }
@@ -88,7 +98,7 @@ int LeArquivo(char *nomeArq, dinArrayEntrada *de, arvore **arv, avl **arvAvl) {
     FILE* arq = fopen(nomeArq, "rb"); /* abrindo em modo binário pra evitar problemas entre
      os separadores de linha de windows e UNIX (\CRLF vs \LF) */
     if(arq == NULL) {
-        printf("Arquivo nao encontrado!\n");
+        //printf("Arquivo nao encontrado!\n");
         return 1;
     }
     char buff[700];
@@ -100,7 +110,7 @@ int LeArquivo(char *nomeArq, dinArrayEntrada *de, arvore **arv, avl **arvAvl) {
     long offs = ftell(arq); //o primeiro ftell tem que ser antes da primeira leitura
     while(fgets(buff, 700, arq)) {
         char *frase, palavra[100][100];
-        frase = strtok(buff, "\""); // Foi lida a linha inteira, então separa a frase inicial
+        frase = strtok(buff, "'\""); // Foi lida a linha inteira, então separa a frase inicial
         int qtd = SeparaPalavras(palavra, frase); // E depois separa palavra por palavra
 
         start = clock();

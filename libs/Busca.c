@@ -20,6 +20,7 @@ void ImprimeInfos(entrada *e, char *nomeArq) {
     printf("Frequencia: %d\n\n", e->frequencia);
     int ant = -1; //Não imprimir repetidos
 
+    //TODO: Talvez tentar utilizar caractere extendido aqui
     for(int i = 0; i < e->offsets.qtd; ++i) {
         fseek(arq, (long) e->offsets.array[i], 0);
         if(ant == e->offsets.array[i]) continue;

@@ -53,7 +53,7 @@ entrada* BuscaABB(arvore *raiz, char *palavra) {
 }
 
 //Busca a palavra em frequência na arvore AVL, e retorna um ponteiro para o vetor de palavras que tem aquela frequência
-dinArrayEntrada* BuscaAVL(avl *raiz, unsigned int freq) {
+dinArrayEntrada* BuscaAVL(avlFrequencia *raiz, unsigned int freq) {
     if(raiz == NULL) return NULL;
     if(freq == raiz->entArr.array[0].frequencia) return &raiz->entArr;
     if(freq > raiz->entArr.array[0].frequencia) return BuscaAVL(raiz->dir, freq);
@@ -73,13 +73,10 @@ entrada* BuscaBIN(dinArrayEntrada *vetor ,char *palavra, int esq, int dir) { //c
     else{
         if (dir >= esq){
             int meio = (esq + dir)/2;
-
             if(strcmp(palavra, vetor->array[meio].palavra) == 0) return &vetor->array[meio];
-
             else if(strcmp(palavra, vetor->array[meio].palavra) < 0){
                 return BuscaBIN(vetor, palavra, esq, (meio-1));
             }
-
             else{
                 return BuscaBIN(vetor, palavra, (meio+1), dir);
             }

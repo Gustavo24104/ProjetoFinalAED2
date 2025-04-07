@@ -94,7 +94,7 @@ void InsereArvore(char palavra[100][100], arvore **arv, int qtd, int offs) {
 
 
 //Função para ler o arquivo e adicionar nas estruturas (vetor e arvores)
-int LeArquivo(char *nomeArq, dinArrayEntrada *de, arvore **arv, avl **arvAvl) {
+int LeArquivo(char *nomeArq, dinArrayEntrada *de, arvore **arv, arvore **avlPalavras, avlFrequencia **arvAvl){
     FILE* arq = fopen(nomeArq, "rb"); /* abrindo em modo binário pra evitar problemas entre
      os separadores de linha de windows e UNIX (\CRLF vs \LF) */
     if(arq == NULL) {
@@ -105,7 +105,8 @@ int LeArquivo(char *nomeArq, dinArrayEntrada *de, arvore **arv, avl **arvAvl) {
     time_t start = 0, end = 0;
     double tempoVetor = 0;
     double tempoArvoreNB = 0;
-    double tempoArvoreAVL = 0;
+    double tempoArvoreAVLFrequencia = 0;
+    double tempoArvoreAVLPalavras = 0;
     //Inserindo no vetor
     long offs = ftell(arq); //o primeiro ftell tem que ser antes da primeira leitura
     while(fgets(buff, 700, arq)) {
@@ -123,6 +124,11 @@ int LeArquivo(char *nomeArq, dinArrayEntrada *de, arvore **arv, avl **arvAvl) {
         end = clock();
         tempoArvoreNB += ((double) (end - start)/CLOCKS_PER_SEC);
 
+        start = clock();
+        InsereArvore(palavra, avlPalavras, qtd, offs);
+        end = clock();
+        tempoArvoreAVLPalavras += ((double) (end - start)/CLOCKS_PER_SEC);
+
         offs = ftell(arq);
     }
 
@@ -130,10 +136,10 @@ int LeArquivo(char *nomeArq, dinArrayEntrada *de, arvore **arv, avl **arvAvl) {
     // e sabermos suas frequências
     start = clock();
     for(int i = 0; i < de->qtd; ++i) {
-        InsereAVL(arvAvl, &de->array[i]);
+        InsereAVLFrequencia(arvAvl, &de->array[i]);
     }
     end = clock();
-    tempoArvoreAVL = ((double) (end - start)/CLOCKS_PER_SEC);
+    tempoArvoreAVLFrequencia = ((double) (end - start) / CLOCKS_PER_SEC);
 
     //calcula tempo de ordenação do vetor
     start = clock();
@@ -144,7 +150,8 @@ int LeArquivo(char *nomeArq, dinArrayEntrada *de, arvore **arv, avl **arvAvl) {
 
     printf("Tempo para insercao e ordenacao no vetor: %.4lf segs\n", tempoVetor);
     printf("Tempo para insercao na arvore binaria de busca nao balanceada: %.4lf segs\n", tempoArvoreNB);
-    printf("Tempo para insercao na arvore AVL: %.4lf segs\n", tempoArvoreAVL);
+    printf("Tempo para insercao na arvore AVL de palavras: %.4lf segs\n", tempoArvoreAVLPalavras);
+    printf("Tempo para insercao na arvore AVL de frequencias: %.4lf segs\n", tempoArvoreAVLFrequencia);
     fclose(arq);
 
 

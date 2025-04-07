@@ -10,14 +10,14 @@ typedef struct arvore {
 typedef struct avl {
     dinArrayEntrada entArr;
     struct avl *dir, *esq;
-}avl ;
+} avlFrequencia;
 
 
 
 int InsereArvoreNB(arvore **raiz, entrada *e, int offs);
 void LiberaArvore(arvore **raiz);
-int InsereAVL(avl **raiz, entrada *e);
-void LiberaAVL(avl **raiz);
+int InsereAVLFrequencia(avlFrequencia **raiz, entrada *e);
+void LiberaAVL(avlFrequencia **raiz);
 
 
 

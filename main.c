@@ -33,7 +33,8 @@ void Menu(){
     int escolha = 0;
     dinArrayEntrada de;
     arvore *arvNB = NULL;
-    avl *arvAVL = NULL;
+    arvore *arvAVLPalavras = NULL;
+    avlFrequencia *arvAVLFrequencia = NULL;
     InicializaDAEntrada(&de);
     char arq[100];
     char word[100];
@@ -46,7 +47,7 @@ void Menu(){
         fflush(stdin);
         fgets(arq, 100, stdin);
         arq[strlen(arq) - 1] = '\0';
-        inicio = LeArquivo(arq, &de, &arvNB, &arvAVL);
+        inicio = LeArquivo(arq, &de, &arvNB, &arvAVLPalavras,&arvAVLFrequencia);
         if (inicio != 0) printf("\nArquivo nao encontrado!\n");
     }
 
@@ -60,7 +61,8 @@ void Menu(){
 
             case 1:
                 LiberaArvore(&arvNB);
-                LiberaAVL(&arvAVL);
+                LiberaArvore(&arvAVLPalavras);
+                LiberaAVL(&arvAVLFrequencia);
                 LiberaDAEntrada(&de);
                 InicializaDAEntrada(&de);
                 inicio = 1;
@@ -70,7 +72,7 @@ void Menu(){
                     setbuf(stdin, NULL);
                     fgets(arq, 100, stdin);
                     arq[strlen(arq) - 1] = '\0';
-                    inicio = LeArquivo(arq, &de, &arvNB, &arvAVL);
+                    inicio = LeArquivo(arq, &de, &arvNB, &arvAVLPalavras, &arvAVLFrequencia);
                     if (inicio != 0) printf("\nArquivo nao encontrado!\n");
                 }
                 continue;
@@ -83,19 +85,41 @@ void Menu(){
                 word[strlen(word) - 1] = '\0';
 
                 long double tempoABB = 0;
+                long double _tempoAVL = 0;
                 long double tempoBIN = 0;
+                struct timespec para, com;
+                long double microABB = 0, microAVL = 0, microBIN = 0;
                 entrada* aux1 = NULL;
                 entrada* aux2 = NULL;
+                entrada* aux3 = NULL;
 
+                //Arvore binária
                 start = clock();
+                clock_gettime(CLOCK_MONOTONIC, &com);
                 aux1 = BuscaABB(arvNB, word);
+                clock_gettime(CLOCK_MONOTONIC, &para);
                 end = clock();
-                tempoABB = (double) (end - start)/CLOCKS_PER_SEC;
+                tempoABB = (double) ((double) (end - start)/CLOCKS_PER_SEC);
+                microABB =  (para.tv_sec - com.tv_sec) * 1000000 + para.tv_nsec - com.tv_nsec;
 
+                //Vetor com busca binaria
                 start = clock();
+                clock_gettime(CLOCK_MONOTONIC, &com);
                 aux2 = BuscaBIN(&de, word, 0, (de.qtd)-1);
+                clock_gettime(CLOCK_MONOTONIC, &para);
                 end = clock();
+                microBIN =  (para.tv_sec - com.tv_sec) * 1000000 + para.tv_nsec - com.tv_nsec;
                 tempoBIN = (double) (end - start)/CLOCKS_PER_SEC;
+
+                //Arvore AVL
+                start = clock();
+                clock_gettime(CLOCK_MONOTONIC, &com);
+                aux3 = BuscaABB(arvAVLPalavras, word);
+                clock_gettime(CLOCK_MONOTONIC, &para);
+                end = clock();
+                microAVL =  (para.tv_sec - com.tv_sec) * 1000000 + para.tv_nsec - com.tv_nsec;
+                _tempoAVL = (double) (end - start)/CLOCKS_PER_SEC;
+
 
                 if(aux1 == NULL && aux2 == NULL) {
                     printf("palavra nao encontrada! voce digitou corretamente?");
@@ -104,8 +128,10 @@ void Menu(){
 
                 ImprimeInfos(aux1, arq);
                 ImprimeInfos(aux2, arq);
-                printf("\nTempo de pesquisa de arvore nao balanceada: %.20Lf segs)\n", tempoABB);
-                printf("\nTempo de pesquisa busca binaria: %.20Lf segs)\n", tempoBIN);
+                ImprimeInfos(aux3, arq);
+                printf("\nTempo de pesquisa de arvore nao balanceada: %Lg segs\n", microABB);
+                printf("\nTempo de pesquisa busca binaria: %Lg segs\n", microBIN);
+                printf("\nTempo de pesquisa arvore AVL de palavras: %Lg segs\n", microAVL);
                 continue;
 
             case 3:
@@ -113,20 +139,23 @@ void Menu(){
                 scanf("%d", &frq);
                 long double tempoAVL = 0;
                 start = clock();
-                dinArrayEntrada *aux = BuscaAVL(arvAVL, frq);
+                clock_gettime(CLOCK_MONOTONIC, &com);
+                dinArrayEntrada *aux = BuscaAVL(arvAVLFrequencia, frq);
                 end = clock();
+                clock_gettime(CLOCK_MONOTONIC, &para);
+                tempoAVL =  (para.tv_sec - com.tv_sec) * 1000000 + para.tv_nsec - com.tv_nsec;
                 if(aux == NULL) {
                     printf("Nao ha palavras com frequencia %d!\n", frq);
                     continue;
                 }
                 ImprimePalavras(aux);
                 tempoAVL = (double) (end - start)/CLOCKS_PER_SEC;
-                printf("Tempo de pesquisa por frequencia em AVL: %.20Lf segs\n", tempoAVL);
+                printf("Tempo de pesquisa por frequencia em AVL: %Lg segs\n", tempoAVL);
                 continue;
 
             case -1:
                 LiberaArvore(&arvNB);
-                LiberaAVL(&arvAVL);
+                LiberaAVL(&arvAVLFrequencia);
                 LiberaDAEntrada(&de);
                 printf("\nEncerrando...");
         }
@@ -134,6 +163,9 @@ void Menu(){
 }
 
 int main() {
-    Menu();
+   Menu();
+
+
     return 0;
+
 }

@@ -69,13 +69,13 @@ entrada* BuscaBIN(dinArrayEntrada *vetor ,char *palavra, int esq, int dir) { //c
         if (dir >= esq){
             int meio = (esq + dir)/2;
 
-            if(strcmp(palavra, vetor->array[meio].palavra) == 0) return vetor->array;
+            if(strcmp(palavra, vetor->array[meio].palavra) == 0) return &vetor->array[meio];
 
-            if(strcmp(palavra, vetor->array[meio].palavra) < 0){
+            else if(strcmp(palavra, vetor->array[meio].palavra) < 0){
                 return BuscaBIN(vetor, palavra, esq, (meio-1));
             }
 
-            if(strcmp(palavra, vetor->array[meio].palavra) > 0){
+            else{
                 return BuscaBIN(vetor, palavra, (meio+1), dir);
             }
         }

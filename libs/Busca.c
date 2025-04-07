@@ -64,22 +64,4 @@ void ImprimePalavras(dinArrayEntrada *de) {
 }
 
 
-entrada* BuscaBIN(dinArrayEntrada *vetor ,char *palavra, int esq, int dir){ //coloca que a direita é a qtd - 1
-    if (vetor == NULL) return NULL;
-    else{
-        if (dir >= esq){
-            int meio = (esq + dir)/2;
 
-            if(strcmp(palavra, vetor->array[meio].palavra) == 0) return vetor->array;
-
-            if(strcmp(palavra, vetor->array[meio].palavra) < 0){
-                return BuscaBIN(vetor, palavra, esq, (meio-1));
-            }
-
-            if(strcmp(palavra, vetor->array[meio].palavra) > 0){
-                return BuscaBIN(vetor, palavra, (meio+1), dir);
-            }
-        }
-        else return NULL;
-    }
-}

@@ -2,7 +2,7 @@
 #include "headers/DynamicArray.h"
 #include "headers/Leitura.h"
 #include "headers/Busca.h"
-#include "headers/Menu.h"
+#include <string.h>
 
 /*
  * Ideia geral: cada entrada eh representado por uma struct, após a leitura do arquivo (feita por uma função) um vetor
@@ -29,7 +29,19 @@
  */
 
 
+
+
 int main() {
-    Menu();
+    dinArrayEntrada de;
+    arvore *arvNB = NULL;
+    avl *arvAVL = NULL;
+    InicializaDAEntrada(&de);
+    LeArquivo("movie_quotes.csv", &de, &arvNB, &arvAVL);
+
+    LiberaArvore(&arvNB);
+    LiberaAVL(&arvAVL);
+    LiberaDAEntrada(&de);
+
+
     return 0;
 }

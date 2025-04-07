@@ -7,6 +7,5 @@ void ImprimeInfos(entrada *e, char *nomeArq);
 entrada* BuscaABB(arvore *raiz, char *palavra);
 dinArrayEntrada* BuscaAVL(avl *raiz, unsigned int freq);
 void ImprimePalavras(dinArrayEntrada *de);
-entrada* BuscaBIN(dinArrayEntrada *vetor ,char *palavra, int esq, int dir);
 
 #endif

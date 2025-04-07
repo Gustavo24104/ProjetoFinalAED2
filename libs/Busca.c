@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <wchar.h>
 
 
 // Receve uma entrada (encontrada por meio de busca binaria ou alguma outra arvore de busca [AVL/Binária] + o nome do
@@ -24,12 +25,15 @@ void ImprimeInfos(entrada *e, char *nomeArq) {
     for(int i = 0; i < e->offsets.qtd; ++i) {
         fseek(arq, (long) e->offsets.array[i], 0);
         if(ant == e->offsets.array[i]) continue;
-        char buff[500], *cit, *filme, *ano;
+        char buff[700], *cit = NULL, *filme = NULL, *ano = NULL;
+
         fgets(buff, 500, arq);
+
         // Separação de cada parte da linha
         cit = strtok(buff, "\"");
         filme = strtok(NULL, "\",");
         ano = strtok(NULL, "\",");
+
         printf("Citacao: %s\n", cit);
         printf("Filme: %s\n", filme);
         printf("Ano: %s\n", ano);

@@ -28,6 +28,7 @@
  * Outro detalhe é que durante a execução do programa o usuário pode mudar o arquivo escolhido, para isso temos que
  * liberar as estruturas e recarregá-las
  */
+
 void Menu(){
     int escolha = 0;
     dinArrayEntrada de;
@@ -48,6 +49,8 @@ void Menu(){
         inicio = LeArquivo(arq, &de, &arvNB, &arvAVL);
         if (inicio != 0) printf("\nArquivo nao encontrado!\n");
     }
+
+    PosFix(arvAVL);
 
     while (escolha != -1){
         printf("\n(1)Trocar arquivo.\n(2)Busca por palavra.\n(3)Busca por frequencia.\n(-1)Encerrar.\n");
@@ -112,7 +115,7 @@ void Menu(){
                 scanf("%d", &frq);
                 long double tempoAVL = 0;
                 start = clock();
-                dinArrayEntrada * aux = BuscaAVL(arvAVL, frq);
+                dinArrayEntrada *aux = BuscaAVL(arvAVL, frq);
                 end = clock();
                 if(aux == NULL) {
                     printf("Nao ha palavras com frequencia %d!\n", frq);

@@ -110,7 +110,7 @@ int LeArquivo(char *nomeArq, dinArrayEntrada *de, arvore **arv, avl **arvAvl) {
     long offs = ftell(arq); //o primeiro ftell tem que ser antes da primeira leitura
     while(fgets(buff, 700, arq)) {
         char *frase, palavra[100][100];
-        frase = strtok(buff, "'\""); // Foi lida a linha inteira, então separa a frase inicial
+        frase = strtok(buff, "\""); // Foi lida a linha inteira, então separa a frase inicial
         int qtd = SeparaPalavras(palavra, frase); // E depois separa palavra por palavra
 
         start = clock();

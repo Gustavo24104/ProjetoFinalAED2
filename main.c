@@ -103,8 +103,8 @@ void Menu(){
 
                 ImprimeInfos(aux1, arq);
                 ImprimeInfos(aux2, arq);
-                printf("\nTempo de pesquisa de arvore nao balanceada: %.12Lf segs)\n", tempoABB);
-                printf("\nTempo de pesquisa busca binaria: %.12Lf segs)\n", tempoBIN);
+                printf("\nTempo de pesquisa de arvore nao balanceada: %.20Lf segs)\n", tempoABB);
+                printf("\nTempo de pesquisa busca binaria: %.20Lf segs)\n", tempoBIN);
                 continue;
 
             case 3:
@@ -115,12 +115,12 @@ void Menu(){
                 dinArrayEntrada * aux = BuscaAVL(arvAVL, frq);
                 end = clock();
                 if(aux == NULL) {
-                    printf("Nao há palavras com frequencia %d!\n", frq);
+                    printf("Nao ha palavras com frequencia %d!\n", frq);
                     continue;
                 }
                 ImprimePalavras(aux);
                 tempoAVL = (double) (end - start)/CLOCKS_PER_SEC;
-                printf("Tempo de pesquisa por frequencia em AVL: %.12Lf segs\n", tempoAVL);
+                printf("Tempo de pesquisa por frequencia em AVL: %.20Lf segs\n", tempoAVL);
                 continue;
 
             case -1:

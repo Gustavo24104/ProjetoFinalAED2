@@ -124,7 +124,7 @@ void ShellSort(dinArrayEntrada* vet) {
             strcpy(key, vet->array[i].palavra);
             aux = vet->array[i];
             j = i - h;
-            while (j >= 0 && (strcmp(vet->array[j].palavra, key) > 0)) {
+            while (j >= 0 && (strcmp(vet->array[j].palavra, aux.palavra) > 0)) {
                 vet->array[j+h] = vet->array[j];
                 j-=h;
             }

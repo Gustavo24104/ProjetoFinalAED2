@@ -11,4 +11,5 @@ add_executable(ProjetoFinalAED2 main.c
         libs/Busca.c
         headers/Busca.h
         libs/Arvores.c
-        headers/Arvores.h)
+        headers/Arvores.h
+)

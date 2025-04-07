@@ -32,7 +32,6 @@ int InsereDAEntrada(entrada *e, dinArrayEntrada *arr);
 void InicializaDAEntrada(dinArrayEntrada *dae);
 void LiberaDAEntrada(dinArrayEntrada *da);
 void ImprimeEntradas(dinArrayEntrada *de);
-void ShellSort(dinArrayEntrada* vet);
 
 
 

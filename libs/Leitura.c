@@ -45,9 +45,6 @@ int JaExiste(dinArrayEntrada *de, char *palavra) {
 //TODO: Depois verificar se eh melhor ordenar tudo no final ou ordenar a cada inserção (com insertion sort) e buscar
 // com busca binária
 
-
-
-
 // Insere as palavras no vetor dinamico de entradas
 void InsereVetor(char palavra[100][100], dinArrayEntrada *de, int qtd, int offs) {
     for (int i = 0; i < qtd; ++i) {
@@ -66,7 +63,6 @@ void InsereVetor(char palavra[100][100], dinArrayEntrada *de, int qtd, int offs)
         InsereDAEntrada(&new, de);
         InsereDAInt(offs, &de->array[de->qtd - 1].offsets);
     }
-
 }
 
 //Função insere cada palavra separadamente na arvore
@@ -80,7 +76,6 @@ void InsereArvore(char palavra[100][100], arvore **arv, int qtd, int offs) {
         InsereArvoreNB(arv, &new, offs);
     }
 }
-
 
 
 //Função para ler o arquivo e adicionar nas estruturas (vetor e arvores)
@@ -125,13 +120,11 @@ int LeArquivo(char *nomeArq, dinArrayEntrada *de, arvore **arv, avl **arvAvl) {
     end = clock();
     tempoArvoreAVL = ((double) (end - start)/CLOCKS_PER_SEC);
 
-    //calcula tempo de ordenação do vetor
-    start = clock();
-    ShellSort(de);
-    end = clock();
-    tempoVetor += ((double)(end - start)/CLOCKS_PER_SEC);
-
-
+    //TODO:
+//      time_t start = clock();
+//      OrdenaVetor();
+//      time_t end = clock();
+//      tempoVetor += ((double)(end - start)/CLOCKS_PER_SEC);
     printf("Tempo para insercao e ordenacao no vetor: %.4lf segs\n", tempoVetor);
     printf("Tempo para insercao na arvore binaria de busca nao balanceada: %.4lf segs\n", tempoArvoreNB);
     printf("Tempo para insercao na arvore AVL: %.4lf segs\n", tempoArvoreAVL);

@@ -78,11 +78,11 @@ int InsereDAEntrada(entrada *e, dinArrayEntrada *arr) {
     }
 
 
-    arr->array[arr->qtd++] = *e;
-    arr->array[arr->qtd - 1].offsets.array = malloc(e->offsets.capacidade * sizeof(unsigned int)); /* Aloca nova
+    arr->array[arr->qtd] = *e;
+    arr->array[arr->qtd].offsets.array = malloc(e->offsets.capacidade * sizeof(unsigned int)); /* Aloca nova
     memória pra garantir que o array de offsets de 'e' e 'arr' apontem para espaços diferentes na memória, evitando
     conflitos */
-    memcpy(arr->array[arr->qtd - 1].offsets.array, e->offsets.array,
+    memcpy(arr->array[arr->qtd++].offsets.array, e->offsets.array,
            e->offsets.capacidade * sizeof(unsigned int)); /* copiar array pra
     pra garantir que ambas estejam separadas */
     return 0;

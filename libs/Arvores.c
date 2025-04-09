@@ -56,14 +56,6 @@ int InsereArvoreNB(arvore **raiz, entrada *e, int offs) {
     return 0;
 }
 
-//Retirado do livro do André Backes "Algoritmos e Estruturas de Dados em Linguagem C"
-void RotacaoDireitaFrequencia(avlFrequencia **pivo) {
-    avlFrequencia *temp;
-    temp = (*pivo)->esq;
-    (*pivo)->esq = temp->dir;
-    temp->dir = *pivo;
-    (*pivo) = temp;
-}
 
 //Rotaciona AVL de frequencias
 int GetAlturaFrequencia(avlFrequencia *raiz) {
@@ -76,6 +68,14 @@ int GetAlturaFrequencia(avlFrequencia *raiz) {
     return e + 1;
 }
 
+//Retirado do livro do André Backes "Algoritmos e Estruturas de Dados em Linguagem C"
+void RotacaoDireitaFrequencia(avlFrequencia **pivo) {
+    avlFrequencia *temp;
+    temp = (*pivo)->esq;
+    (*pivo)->esq = temp->dir;
+    temp->dir = *pivo;
+    (*pivo) = temp;
+}
 
 
 //Retirado do livro do André Backes "Algoritmos e Estruturas de Dados em Linguagem C"
@@ -211,7 +211,7 @@ int InsereAVLFrequencia(avlFrequencia **raiz, entrada *e) {
 
         *raiz = new;
         return 0;
-    }if(e->frequencia < (*raiz)->entArr.array[0].frequencia) {
+    } if(e->frequencia < (*raiz)->entArr.array[0].frequencia) {
         if((*raiz)->esq == NULL) {
             avlFrequencia *new = malloc(sizeof(avlFrequencia));
             if(new == NULL) return -1;
@@ -223,7 +223,7 @@ int InsereAVLFrequencia(avlFrequencia **raiz, entrada *e) {
             return 0;
         }
         InsereAVLFrequencia(&(*raiz)->esq, e);
-    }if(e->frequencia > (*raiz)->entArr.array[0].frequencia) {
+    } if(e->frequencia > (*raiz)->entArr.array[0].frequencia) {
         if((*raiz)->dir == NULL) {
             avlFrequencia *new = malloc(sizeof(avlFrequencia));
             new->dir = NULL;
@@ -234,7 +234,7 @@ int InsereAVLFrequencia(avlFrequencia **raiz, entrada *e) {
             return 0;
         }
         InsereAVLFrequencia(&(*raiz)->dir, e);
-    } else {
+    } else if(e->frequencia == (*raiz)->entArr.array[0].frequencia) {
         //se chegou aqui quer dizer que a entrada ja esta na arvore
         InsereDAEntrada(e, &(*raiz)->entArr);
         return 0;
@@ -242,7 +242,6 @@ int InsereAVLFrequencia(avlFrequencia **raiz, entrada *e) {
 
     int fb = GetAlturaFrequencia((*raiz)->esq) - (GetAlturaFrequencia((*raiz)->dir));
     if(fb == -2) { // Arvore maior esta na direita
-        printf("rt\n");
         int fbDir = GetAlturaFrequencia((*raiz)->dir->esq) - GetAlturaFrequencia((*raiz)->dir->dir);
         if(fbDir < 0) { //Desbalanceamento direito-direito
             RotacaoEsquerdaFrequencia(raiz);
@@ -257,7 +256,6 @@ int InsereAVLFrequencia(avlFrequencia **raiz, entrada *e) {
     }
 
     if(fb == 2) { // Arvore maior na esquerda
-        printf("rt\n");
         int fbEsq = GetAlturaFrequencia((*raiz)->esq->esq) - GetAlturaFrequencia((*raiz)->esq->dir);
         if(fbEsq > 0) { // Desbalanceamento esquerda-esquerda
             RotacaoDireitaFrequencia(raiz);

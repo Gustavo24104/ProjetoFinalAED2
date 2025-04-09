@@ -84,6 +84,3 @@ entrada* BuscaBIN(dinArrayEntrada *vetor ,char *palavra, int esq, int dir) { //c
         else return NULL;
     }
 }
-
-
-

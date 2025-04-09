@@ -160,10 +160,9 @@ void Menu(){
     }
 }
 
+
 int main() {
+    printf("<--------------------------> Bem vindo ao compendio de citacoes! <---------------------->\n");
    Menu();
-
-
-    return 0;
-
+   return 0;
 }

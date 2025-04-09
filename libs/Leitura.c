@@ -32,7 +32,7 @@ int SeparaPalavras(char palavras[100][100], const char *frase) {
         if(frase[i] == ' ' || frase[i] == '.' || frase[i] == '!' || frase[i] == '?' || frase[i+1] == '\0') { //fim de palavra
             acc[j] = '\0';
             //printf("%s\n", acc);
-            if(j >= 3) strcpy(palavras[qtdPalavras++], acc); /* adiciona a palavra no vetor se tiver mais de 3
+            if(j >= 4) strcpy(palavras[qtdPalavras++], acc); /* adiciona a palavra no vetor se tiver mais de 3
             caracteres */
             j = 0;
             memset(acc, 0, 50); // reseta o acumulador setando todos seus bits pra 0

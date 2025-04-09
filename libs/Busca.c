@@ -64,7 +64,7 @@ dinArrayEntrada* BuscaAVL(avlFrequencia *raiz, unsigned int freq) {
 // uma frequência x
 void ImprimePalavras(dinArrayEntrada *de) {
     for(int i = 0; i < de->qtd; ++i) {
-        printf("Palavra: %s\n", de->array[i].palavra);
+        printf("Palavra: %s : %d\n", de->array[i].palavra, de->array[i].frequencia);
     }
 }
 

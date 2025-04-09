@@ -3,6 +3,7 @@
 #include "../headers/Arvores.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 //Inserção na ABB nao balanceada
 //Retorno -1 caso falta de memória, -2 caso arvore nula
@@ -200,7 +201,6 @@ int InsereAVLPalavra(arvore **raiz, entrada *e, int offs) {
 //Insere um elemento na arvore AVL
 int InsereAVLFrequencia(avlFrequencia **raiz, entrada *e) {
     if(raiz == NULL) return -2;
-
     if(*raiz == NULL) { //primeira inserção, coloca na raíz
         avlFrequencia *new = malloc(sizeof(avlFrequencia));
         if(new == NULL) return -1;
@@ -242,6 +242,7 @@ int InsereAVLFrequencia(avlFrequencia **raiz, entrada *e) {
 
     int fb = GetAlturaFrequencia((*raiz)->esq) - (GetAlturaFrequencia((*raiz)->dir));
     if(fb == -2) { // Arvore maior esta na direita
+        printf("rt\n");
         int fbDir = GetAlturaFrequencia((*raiz)->dir->esq) - GetAlturaFrequencia((*raiz)->dir->dir);
         if(fbDir < 0) { //Desbalanceamento direito-direito
             RotacaoEsquerdaFrequencia(raiz);
@@ -256,6 +257,7 @@ int InsereAVLFrequencia(avlFrequencia **raiz, entrada *e) {
     }
 
     if(fb == 2) { // Arvore maior na esquerda
+        printf("rt\n");
         int fbEsq = GetAlturaFrequencia((*raiz)->esq->esq) - GetAlturaFrequencia((*raiz)->esq->dir);
         if(fbEsq > 0) { // Desbalanceamento esquerda-esquerda
             RotacaoDireitaFrequencia(raiz);

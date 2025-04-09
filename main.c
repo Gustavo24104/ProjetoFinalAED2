@@ -51,6 +51,7 @@ void Menu(){
         if (inicio != 0) printf("\nArquivo nao encontrado!\n");
     }
 
+    
     while (escolha != -1){
         printf("\n(1)Trocar arquivo.\n(2)Busca por palavra.\n(3)Busca por frequencia.\n(-1)Encerrar.\n");
         scanf("%d", &escolha);
@@ -89,35 +90,32 @@ void Menu(){
                 long double tempoBIN = 0;
                 struct timespec para, com;
                 long double microABB = 0, microAVL = 0, microBIN = 0;
-                entrada* aux1 = NULL;
-                entrada* aux2 = NULL;
-                entrada* aux3 = NULL;
-
+                
                 //Arvore binária
                 start = clock();
-                clock_gettime(CLOCK_MONOTONIC, &com);
-                aux1 = BuscaABB(arvNB, word);
-                clock_gettime(CLOCK_MONOTONIC, &para);
+                //clock_gettime(CLOCK_MONOTONIC, &com);
+                entrada* aux1 = BuscaABB(arvNB, word);
+                //clock_gettime(CLOCK_MONOTONIC, &para);
                 end = clock();
-                tempoABB = (double) ((double) (end - start)/CLOCKS_PER_SEC);
-                microABB =  (para.tv_sec - com.tv_sec) * 1000000 + para.tv_nsec - com.tv_nsec;
+                tempoABB = (double) (end - start)/CLOCKS_PER_SEC;
+                //microABB =  (para.tv_sec - com.tv_sec) * 1000000 + para.tv_nsec - com.tv_nsec;
 
                 //Vetor com busca binaria
                 start = clock();
-                clock_gettime(CLOCK_MONOTONIC, &com);
-                aux2 = BuscaBIN(&de, word, 0, (de.qtd)-1);
-                clock_gettime(CLOCK_MONOTONIC, &para);
+                //clock_gettime(CLOCK_MONOTONIC, &com);
+                entrada* aux2 = BuscaBIN(&de, word, 0, (de.qtd)-1);
+                //clock_gettime(CLOCK_MONOTONIC, &para);
                 end = clock();
-                microBIN =  (para.tv_sec - com.tv_sec) * 1000000 + para.tv_nsec - com.tv_nsec;
+                //microBIN =  (para.tv_sec - com.tv_sec) * 1000000 + para.tv_nsec - com.tv_nsec;
                 tempoBIN = (double) (end - start)/CLOCKS_PER_SEC;
 
                 //Arvore AVL
                 start = clock();
-                clock_gettime(CLOCK_MONOTONIC, &com);
-                aux3 = BuscaABB(arvAVLPalavras, word);
-                clock_gettime(CLOCK_MONOTONIC, &para);
+                //clock_gettime(CLOCK_MONOTONIC, &com);
+                entrada* aux3 = BuscaABB(arvAVLPalavras, word);
+                //clock_gettime(CLOCK_MONOTONIC, &para);
                 end = clock();
-                microAVL =  (para.tv_sec - com.tv_sec) * 1000000 + para.tv_nsec - com.tv_nsec;
+                //microAVL =  (para.tv_sec - com.tv_sec) * 1000000 + para.tv_nsec - com.tv_nsec;
                 _tempoAVL = (double) (end - start)/CLOCKS_PER_SEC;
 
 
@@ -129,9 +127,9 @@ void Menu(){
                 ImprimeInfos(aux1, arq);
                 ImprimeInfos(aux2, arq);
                 ImprimeInfos(aux3, arq);
-                printf("\nTempo de pesquisa de arvore nao balanceada: %Lg segs\n", microABB);
-                printf("\nTempo de pesquisa busca binaria: %Lg segs\n", microBIN);
-                printf("\nTempo de pesquisa arvore AVL de palavras: %Lg segs\n", microAVL);
+                printf("\nTempo de pesquisa de arvore nao balanceada: %Lg segs\n", tempoABB);
+                printf("\nTempo de pesquisa busca binaria: %Lg segs\n", tempoBIN);
+                printf("\nTempo de pesquisa arvore AVL de palavras: %Lg segs\n", _tempoAVL);
                 continue;
 
             case 3:
@@ -139,17 +137,17 @@ void Menu(){
                 scanf("%d", &frq);
                 long double tempoAVL = 0;
                 start = clock();
-                clock_gettime(CLOCK_MONOTONIC, &com);
+                //clock_gettime(CLOCK_MONOTONIC, &com);
                 dinArrayEntrada *aux = BuscaAVL(arvAVLFrequencia, frq);
                 end = clock();
-                clock_gettime(CLOCK_MONOTONIC, &para);
-                tempoAVL =  (para.tv_sec - com.tv_sec) * 1000000 + para.tv_nsec - com.tv_nsec;
+                tempoAVL = (double) (end - start)/CLOCKS_PER_SEC;
+                //clock_gettime(CLOCK_MONOTONIC, &para);
+                //tempoAVL =  (para.tv_sec - com.tv_sec) * 1000000 + para.tv_nsec - com.tv_nsec;
                 if(aux == NULL) {
                     printf("Nao ha palavras com frequencia %d!\n", frq);
                     continue;
                 }
                 ImprimePalavras(aux);
-                tempoAVL = (double) (end - start)/CLOCKS_PER_SEC;
                 printf("Tempo de pesquisa por frequencia em AVL: %Lg segs\n", tempoAVL);
                 continue;
 

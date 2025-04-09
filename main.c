@@ -124,8 +124,11 @@ void Menu(){
                     continue;
                 }
 
+                printf("Retorno da busca na arvore nao balanceada:\n");
                 ImprimeInfos(aux1, arq);
+                printf("Retorno da busca binária no vetor:\n");
                 ImprimeInfos(aux2, arq);
+                printf("Retorno da busca na arvore AVL:\n");
                 ImprimeInfos(aux3, arq);
                 printf("\nTempo de pesquisa de arvore nao balanceada: %Lg segs\n", tempoABB);
                 printf("\nTempo de pesquisa busca binaria: %Lg segs\n", tempoBIN);

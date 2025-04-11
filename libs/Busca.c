@@ -9,6 +9,8 @@
 // arquivo que se encontram as palavras
 // Utiliza os offsets na struct para determinar as citações (busca todas as posições, lê a lista e imprime cada parte
 // separadamente)
+
+
 void ImprimeInfos(entrada *e, char *nomeArq) {
     FILE *arq = fopen(nomeArq, "rb"); /* abrindo em modo binário pra evitar problemas entre os separadores
     de linha de windows e UNIX (\CRLF vs \LF) */
@@ -64,7 +66,7 @@ dinArrayEntrada* BuscaAVL(avlFrequencia *raiz, unsigned int freq) {
 // uma frequência x
 void ImprimePalavras(dinArrayEntrada *de) {
     for(int i = 0; i < de->qtd; ++i) {
-        printf("Palavra: %s : %d\n", de->array[i].palavra, de->array[i].frequencia);
+        printf("Palavra: %s\n", de->array[i].palavra);
     }
 }
 

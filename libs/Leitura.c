@@ -91,6 +91,17 @@ void InsereArvore(char palavra[100][100], arvore **arv, int qtd, int offs) {
     }
 }
 
+void InsereAVL(char palavra[100][100], arvore **arv, int qtd, int offs) {
+    for(int i = 0; i < qtd; ++i) {
+        entrada new;
+        new.frequencia = 1;
+        InicializaDAInt(&new.offsets);
+        strcpy(new.palavra, palavra[i]);
+        InsereDAInt(offs, &new.offsets);
+        InsereAVLPalavra(arv, &new, offs);
+    }
+}
+
 
 
 //Função para ler o arquivo e adicionar nas estruturas (vetor e arvores)
@@ -125,7 +136,7 @@ int LeArquivo(char *nomeArq, dinArrayEntrada *de, arvore **arv, arvore **avlPala
         tempoArvoreNB += ((double) (end - start)/CLOCKS_PER_SEC);
 
         start = clock();
-        InsereArvore(palavra, avlPalavras, qtd, offs);
+        InsereAVL(palavra, avlPalavras, qtd, offs);
         end = clock();
         tempoArvoreAVLPalavras += ((double) (end - start)/CLOCKS_PER_SEC);
 

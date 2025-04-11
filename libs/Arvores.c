@@ -120,7 +120,6 @@ void RotacaoDireitaAVL(arvore **pivo) {
 
 int InsereAVLPalavra(arvore **raiz, entrada *e, int offs) {
     if(raiz == NULL) return -2;
-
     if(*raiz == NULL) { //primeira inserção, coloca na raíz
         arvore *new = malloc(sizeof(arvore));
         if(new == NULL) return -1;
@@ -144,7 +143,7 @@ int InsereAVLPalavra(arvore **raiz, entrada *e, int offs) {
             (*raiz)->esq = new;
             return 0;
         }
-        return InsereAVLPalavra(&(*raiz)->esq, e, offs);
+        InsereAVLPalavra(&(*raiz)->esq, e, offs);
     }
 
     if(strcmp(e->palavra, (*raiz)->ent.palavra) > 0) {
@@ -157,13 +156,14 @@ int InsereAVLPalavra(arvore **raiz, entrada *e, int offs) {
             (*raiz)->dir = new;
             return 0;
         }
-        return InsereAVLPalavra(&(*raiz)->dir, e, offs);
+        InsereAVLPalavra(&(*raiz)->dir, e, offs);
     }
 
-    //se chegou aqui quer dizer que a entrada ja esta na arvore
-    LiberaDAInt(&e->offsets);
-    InsereDAInt(offs, &(*raiz)->ent.offsets);
-    (*raiz)->ent.frequencia++;
+    if(strcmp(e->palavra, (*raiz)->ent.palavra) == 0) {
+        LiberaDAInt(&e->offsets);
+        InsereDAInt(offs, &(*raiz)->ent.offsets);
+        (*raiz)->ent.frequencia++;
+    }
 
     //Checa balanceamento
     int fb = GetAlturaAVL((*raiz)->esq) - (GetAlturaAVL((*raiz)->dir));

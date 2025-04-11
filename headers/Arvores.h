@@ -17,6 +17,7 @@ typedef struct avl {
 int InsereArvoreNB(arvore **raiz, entrada *e, int offs);
 void LiberaArvore(arvore **raiz);
 int InsereAVLFrequencia(avlFrequencia **raiz, entrada *e);
+int InsereAVLPalavra(arvore **raiz, entrada *e, int offs);
 void LiberaAVL(avlFrequencia **raiz);
 
 

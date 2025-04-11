@@ -29,6 +29,9 @@
  * liberar as estruturas e recarregá-las
  */
 
+
+
+
 void Menu(){
     int escolha = 0;
     dinArrayEntrada de;
